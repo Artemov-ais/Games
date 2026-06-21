@@ -87,15 +87,15 @@ def draw():
 
     if exit_window:
         global tick
-
-        loose_text = font.render(f"Вы проиграли!", True, const.light_grey_color)
-        screen.blit(loose_text, (281, const.y_field_start // 2 - 15))
+        if tick < 85:
+            loose_text = font.render(f"Вы проиграли!", True, const.light_grey_color)
+            screen.blit(loose_text, (281, const.y_field_start // 2 - 15))
         # Плавная смена на окно выхода
-        if tick >= 15:
+        if tick >= 70:
             pygame.draw.rect(screen, const.green_color, pygame.Rect(180, 180, const.WIDTH - 360, const.HEIGHT -360))
-        if tick >= 30:
+        if tick >= 75:
             pygame.draw.rect(screen, const.green_color, pygame.Rect(120, 120, const.WIDTH - 240, const.HEIGHT -240))
-        if tick >= 40 :
+        if tick >= 80 :
             pygame.draw.rect(screen, const.green_color, pygame.Rect(60, 60, const.WIDTH - 120, const.HEIGHT -120))
 
             score_text_title = font.render(score_text, True, const.light_grey_color)
@@ -234,7 +234,7 @@ while not done:
                 apples = []
                 level_window = True
                 exit_window = False
-                tik = 0
+                tick = 0
                 add_aplle()
             elif btn_exit.collidepoint(event.pos):
                 done = True

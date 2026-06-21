@@ -33,6 +33,7 @@ btn_medium_level = pygame.Rect(160, 248, 200, 51)
 btn_hard_level =  pygame.Rect(160, 326, 200, 55)
 btn_restart = pygame.Rect(95, 265, 310, 60)
 btn_exit = pygame.Rect(505, 265, 298, 60)
+
 def draw():
     # Рисуем поле по которому бегает змейка
     pygame.draw.rect(screen, const.field_color, pygame.Rect(const.x_field_start, const.y_field_start, const.WIDTH_field, const.HEIGHT_field))
@@ -90,11 +91,11 @@ def draw():
         loose_text = font.render(f"Вы проиграли!", True, const.light_grey_color)
         screen.blit(loose_text, (281, const.y_field_start // 2 - 15))
         # Плавная смена на окно выхода
-        if tick >= 13:
+        if tick >= 15:
             pygame.draw.rect(screen, const.green_color, pygame.Rect(180, 180, const.WIDTH - 360, const.HEIGHT -360))
-        if tick >= 20:
+        if tick >= 30:
             pygame.draw.rect(screen, const.green_color, pygame.Rect(120, 120, const.WIDTH - 240, const.HEIGHT -240))
-        if tick >= 27:
+        if tick >= 40 :
             pygame.draw.rect(screen, const.green_color, pygame.Rect(60, 60, const.WIDTH - 120, const.HEIGHT -120))
 
             score_text_title = font.render(score_text, True, const.light_grey_color)
@@ -145,11 +146,11 @@ def direction_of_movement():
     if snake[0].x < 0 or snake[0].y < 0  or snake[0].x > 23 or snake[0].y > 12 :
         snake_lives = "No"
 
-    old_direction = direction
-
 def move():
-    apple_is_eaten = False
+    global old_direction
     global game_points
+    apple_is_eaten = False
+
     prev = Point()
     prev.x = snake[0].x
     prev.y = snake[0].y
@@ -173,6 +174,8 @@ def move():
     if not apple_is_eaten:
         snake.pop()
     snake.insert(0, prev)
+
+    old_direction = direction
 
 def add_aplle():
     need_new_position = True
@@ -246,7 +249,8 @@ while not done:
         direction_of_movement()
     elif snake_lives == "No":
         exit_window = True
+
     draw()
     pygame.display.flip()
-    clock.tick(15)
+    clock.tick(60)
     screen.fill(const.background_color)
